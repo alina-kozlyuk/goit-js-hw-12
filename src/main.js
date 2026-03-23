@@ -55,6 +55,11 @@ refs.form.addEventListener('submit', async e => {
 
           if (data.hits.length < 15 || page * 15 >= totalHits) {
               hideLoadMoreButton();
+
+              iziToast.info({
+                  message: "We're sorry, but you've reached the end of search results.",
+                  position: 'topRight'
+              });
           } else {
             showLoadMoreButton();
           }
@@ -74,7 +79,8 @@ refs.form.addEventListener('submit', async e => {
 
 refs.loadMoreBtn.addEventListener('click', async () => {
     page += 1;
-
+    
+    hideLoadMoreButton();
     showLoader();
 
     try {
@@ -90,6 +96,8 @@ refs.loadMoreBtn.addEventListener('click', async () => {
                 position: 'topRight'
 
             });
+        } else {
+            showLoadMoreButton();
         }
 
         const card = document.querySelector('.gallery-item');
